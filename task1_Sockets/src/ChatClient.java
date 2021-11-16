@@ -1,8 +1,5 @@
 import java.io.*;
 import java.net.Socket;
-import java.net.ServerSocket;
-import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 class  ClientSending implements Runnable{
@@ -46,15 +43,10 @@ class ClientListening implements Runnable{
             }
             System.out.println("Server out of service");
             output.close();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
 
 
