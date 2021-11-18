@@ -8,15 +8,6 @@ class ServerListening implements Runnable{
     ServerSocket serverSocket = null;
     ArrayList<Socket> clientSocketList = new ArrayList<Socket>();
 
-    private void socketCheck(){
-        for (int i = 0 ; i < clientSocketList.size(); i ++){
-            if (clientSocketList.get(i).isClosed()){
-                System.out.println(clientSocketList.get(i).isClosed());
-                clientSocketList.remove(i);
-            }
-        }
-    }
-
     @Override
     public void run(){
         try {
@@ -53,7 +44,7 @@ class ServerListening implements Runnable{
 }
 
 class SocketList{
-    ArrayList<Socket> SocketList = new ArrayList<Socket>();
+    ArrayList<Socket> SocketList;
 
     public SocketList(ArrayList<Socket> clientSocketList){
         this.SocketList = clientSocketList;
@@ -105,8 +96,6 @@ class ServerSending implements Runnable{
 
 
 public class ChatServer {
-
-    ArrayList<Socket> clientSocketList = new ArrayList<Socket>();
 
     public static void main(String[] args) {
 
