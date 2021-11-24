@@ -50,11 +50,17 @@ class SocketList{
         this.SocketList = clientSocketList;
     }
 
-    public void socketCheck(){
+    public void socketCheck() throws IOException {
+
+
         for (int i = 0 ; i < SocketList.size(); i ++){
-            if (SocketList.get(i).isClosed()){
-                System.out.println(SocketList.get(i).isClosed());
+
+            try {
+                InputStreamReader inputStream = new InputStreamReader(SocketList.get(i).getInputStream());
+            } catch (IOException e) {
+                SocketList.get(i).close();
                 SocketList.remove(i);
+                e.printStackTrace();
             }
         }
     }
@@ -65,16 +71,25 @@ class ServerSending implements Runnable{
     SocketList clientSocketList;
     Socket clientSocket;
 
-    public ServerSending(Socket clientSocket, SocketList clientSocketList){
+    public ServerSending(Socket clientSocket, SocketList clientSocketList) {
         this.clientSocket = clientSocket;
-        clientSocketList.socketCheck();
         this.clientSocketList = clientSocketList;
+    }
+
+    private void clientSocketCheck() throws IOException {
+        try {
+            InputStreamReader inputStream = new InputStreamReader(clientSocket.getInputStream());
+        } catch (IOException e) {
+            clientSocket.close();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void run(){
         try {
             while (true){
+                clientSocketCheck();
                 BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String msg = input.readLine();
 
