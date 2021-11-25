@@ -1,49 +1,58 @@
 import java.util.Random;
 
 public class HTTPGuess {
-    private int secretNum;
+    public int secretNum;
     private int tryTimes;
     private int guessNum;
+    public String status;
+
 
     public HTTPGuess(){
         secretNum = new Random().nextInt(100);
         tryTimes = 0;
+        status = "not started";
     }
-    public void updateGuessNum(int guessNum){
+    private void updateGuessNum(int guessNum){
         if(guessNum>100||guessNum<0){
             System.out.println("bad number");
         }else {
             this.guessNum = guessNum;
         }
     }
-    public void updateTryTimes(){
+    private void updateTryTimes(){
         tryTimes ++;
     }
-    public boolean isCorrect(){
+    private boolean isCorrect(){
         return secretNum == guessNum;
     }
-    public boolean isHigher(){
+    private boolean isHigher(){
         return secretNum < guessNum;
     }
-    public boolean isLower(){
+    private boolean isLower(){
         return secretNum > guessNum;
     }
 
-    public int play(int newNum){
-        updateGuessNum(newNum);
-
-        if(isCorrect()){
-            return 0;
-        }else
-        if(isHigher()){
-            updateTryTimes();
-            return 1;
-        }else
-        if(isLower()){
-            updateTryTimes();
-            return 2;
-        }
-        return -1;
+    public int getTryTimes(){
+        return tryTimes;
     }
+
+    public void play(int guessNum){
+
+        updateGuessNum(guessNum);
+        updateTryTimes();
+        if (isLower()){
+            status = "higher";
+        }else
+        if (isHigher()){
+            status = "lower";
+        }else
+        if (isCorrect()){
+            status = "correct";
+        }else {
+            status = "error";
+        }
+    }
+
+
 
 }

@@ -61,8 +61,8 @@ public class HTTPResponseGenerator {
         StringBuilder response = new StringBuilder();
 
         String[] generalRes = {statusOK,header1,emptyLine};
-        for (int i = 0; i < generalRes.length; i ++){
-            response.append(generalRes[i]);
+        for (String generalRe : generalRes) {
+            response.append(generalRe);
         }
 
         message = readHtml(htmlPath);
