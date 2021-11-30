@@ -5,12 +5,14 @@ public class HTTPGuess {
     private int tryTimes;
     private int guessNum;
     public String status;
+    public int gameID;
 
 
-    public HTTPGuess(){
+    public HTTPGuess(int gameID){
         secretNum = new Random().nextInt(100);
         tryTimes = 0;
         status = "not started";
+        this.gameID = gameID;
     }
     private void updateGuessNum(int guessNum){
         if(guessNum>100||guessNum<0){
