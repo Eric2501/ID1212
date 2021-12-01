@@ -13,7 +13,7 @@ public class HTTPServer {
 
     public void printRequest(){
         if (HTTPRequest!=null){
-            System.out.println("REQUEST:");
+            System.out.println("\nREQUEST:");
             for (String s : HTTPRequest){
                 System.out.println(s);
             }
@@ -37,7 +37,7 @@ public class HTTPServer {
 
     public void response(OutputStream outputStream, HTTPResponseGenerator myGenerator) throws IOException {
         String response = myGenerator.construct();
-        System.out.println("RESPONSE:\n" + response);
+        System.out.println("\nRESPONSE:\n" + response);
         outputStream.write(response.getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
     }
@@ -72,9 +72,9 @@ public class HTTPServer {
         BufferedReader requestReader;
         OutputStream outputStream;
 
-        clientSocket = serverSocket.accept();
+//        clientSocket = serverSocket.accept();
 
-        outputStream = clientSocket.getOutputStream();
+//        outputStream = clientSocket.getOutputStream();
 
         while (true) {
 
@@ -82,9 +82,11 @@ public class HTTPServer {
 
                 HTTPResponseGenerator generator;
 
-                System.out.println("parsing incomming message");
+                System.out.println("\nparsing incomming message");
+                clientSocket = serverSocket.accept();
                 parseRequest(new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));
                 printRequest();
+                outputStream = clientSocket.getOutputStream();
 
                 if (getURL().equals("/")){
                     generator = new HTTPResponseGenerator("index",gameListCounter);
